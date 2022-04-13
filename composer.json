@@ -1,0 +1,22 @@
+{
+    "name": "vince/lynnmilard.fr",
+    "description": "Site lynnmilard.fr",
+    "authors": [
+        {
+            "name": "vvaufrey",
+            "email": "vaufreyvincent@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "vlucas/phpdotenv": "^5.3",
+        "fakerphp/faker": "^1.16"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core",
+            "App\\": "App"
+        }
+    }
+}

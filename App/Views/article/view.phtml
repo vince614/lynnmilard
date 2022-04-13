@@ -1,0 +1,74 @@
+<?php
+/** @var Render $this */
+use App\App;
+use App\Controllers\ArticleController;
+use App\Models\UserModel;
+use Core\Utils\Render;
+
+/** @var ArticleController $blogController */
+$blogController = $this->class;
+$article = $blogController->article;
+
+/** @var UserModel $userModel */
+$userModel = App::getModel('user');
+$userLogged = $userModel->getUserSession();
+?>
+<div class="container p-5 d-flex vh-90 flex-column justify-content-center my-5">
+    <div class="post-preview">
+        <h2 class="fw-bolder darky fst-italic uppercase">
+            <?= $article->getTitle() ?>
+        </h2>
+        <p class="text-muted">
+            <?= nl2br($article->getContent()) ?>
+        </p>
+        <p class="darky">
+            Posté par
+            <a class="text-capitalize" href="<?= App::getHost() . '/profile/' . $article->getAuthorId() ?>">
+                <?= $article->getAuthor()->getName() ?>
+            </a>
+            le <?= date('d/m/Y', $article->getCreatedAt()) ?> à
+            <span class="text-muted"><?= date('H:i', $article->getCreatedAt()) ?></span>
+        </p>
+    </div>
+    <div class="d-flex">
+        <?php if ($userLogged && $userLogged->getId() === $article->getAuthorId()): ?>
+            <a href="<?= App::getHost() . '/article/' . $article->getUrlKey() . '/edit' ?>" type="button" class="btn btn-primary">Editer l'article</a>
+            <a type="button" class="btn btn-danger mx-2" id="delete-post-button" data-id="<?= $article->getId() ?>">Supprimer l'article</a>
+        <?php endif; ?>
+    </div>
+    <div class="d-fle justify-content-center align-items-center flex-column mt-10">
+        <h2 class="fw-bolder darky fst-italic uppercase">Commentaires</h2>
+        <hr class="my-4" style="width: 100%;"/>
+        <?php foreach ($article->getComments() as $comment): ?>
+            <div class="bg-white p-2">
+                <a href="<?= App::getHost() . '/profile/' . $comment->getAuthor()->getId() ?>">
+                    <div class="d-flex flex-row user-info">
+                        <img class="rounded-circle" src="<?= $comment->getAuthor()->getAvatar() ?>" width="40" height="40">
+                        <div class="d-flex flex-column justify-content-start ml-1">
+                            <span class="d-block font-weight-bold name"><?= $comment->getAuthor()->getName(); ?></span>
+                            <span class="date text-black-50">Le <?= date('d/m/Y', $comment->getCreatedAt()) ?> à
+                            <span class="text-muted"><?= date('H:i', $comment->getCreatedAt()) ?></span>
+                        </div>
+                    </div>
+                </a>
+                <div class="mt-2">
+                    <p class="comment-text"><?= $comment->getContent() ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <div class="form-horizontal d-flex justify-content-center flex-column w-100">
+            <div class="form-group my-2">
+                <textarea class="form-control" id="comment" placeholder="Ecrivez un commentaire" name="comment" style="height:100px;" data-post-id="<?= $article->getId() ?>" required></textarea>
+                <small class="form-text text-muted">Vous pouvez utiliser au maximum 300 caractères</small>
+                <br/>
+                <small class="form-text text-muted">Votre commentaire va être <span class="fw-bolder">évaluer</span> et <span class="fw-bolder">valider</span> par un administrateur avant sa publication sur le site</small>
+            </div>
+            <input type="text" id="form-token" value="<?= App::registry('token_comment') ?>" style="display: none;"/>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary" id="send-post-button">Publier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

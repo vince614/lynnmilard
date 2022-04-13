@@ -1,0 +1,11 @@
+## Ignore PHPStorm files
+.idea
+
+# Vendor
+/vendor
+
+# Ignore env file
+.env
+
+# Todo list
+Todo.txt
