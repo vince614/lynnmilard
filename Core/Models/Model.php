@@ -160,7 +160,6 @@ class Model
      * @param $object
      * @param $tableName
      * @return bool
-     * @throws App_Core_Exception
      */
     public function save($object, $tableName)
     {

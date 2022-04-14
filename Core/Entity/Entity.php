@@ -92,7 +92,7 @@ class Entity
     /**
      * Get table name
      *
-     * @return false|string|string[]|null
+     * @return string
      */
     private function getTableName()
     {

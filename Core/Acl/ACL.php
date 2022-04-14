@@ -18,9 +18,8 @@ class ACL
      * ACL user level
      */
     const EVERYONE      = 0;
-    const NOT_LOGGED_IN = 1;
-    const LOGGED_IN     = 2;
-    const ADMIN         = 3;
+    const LOGGED_IN     = 1;
+    const ADMIN         = 2;
 
     /**
      * @var array
@@ -92,7 +91,7 @@ class ACL
                     self::LOGGED_IN;
             }
         }
-        return self::NOT_LOGGED_IN;
+        return self::EVERYONE;
     }
 
 }
