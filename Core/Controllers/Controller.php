@@ -125,7 +125,7 @@ class Controller
      * @param $block
      * @return $this
      */
-    public function setBlock($block)
+    public function setBlock($block): Controller
     {
         $blockFile = ROOT . '/App/Views/Blocks/' . str_replace('.', '/', $block) . '.phtml';
         if (is_file($blockFile)) {
@@ -141,7 +141,7 @@ class Controller
      * @param $value
      * @return Controller
      */
-    public function setVar($index, $value)
+    public function setVar($index, $value): Controller
     {
         $this->vars[$index] = $value;
         return $this;
@@ -172,7 +172,7 @@ class Controller
      * @param bool $isAssets
      * @return Controller
      */
-    public function setStylesheetPath($path, $isAssets = true)
+    public function setStylesheetPath($path, bool $isAssets = true): Controller
     {
         if ($isAssets) {
             $this->_stylesheetsPaths[] = '/assets/css/' . $path;
@@ -190,7 +190,7 @@ class Controller
      * @param string $type
      * @return Controller
      */
-    public function setScript($fileName, $path, $type = self::JAVASCRIPT_TYPE)
+    public function setScript($fileName, $path, string $type = self::JAVASCRIPT_TYPE): Controller
     {
         $this->_scripts[] = [
             'path' => $path . $fileName,
@@ -204,7 +204,7 @@ class Controller
      *
      * @return array
      */
-    public function getStylesheetsPaths()
+    public function getStylesheetsPaths(): array
     {
         return $this->_stylesheetsPaths;
     }
@@ -214,7 +214,7 @@ class Controller
      *
      * @return array
      */
-    public function getScripts()
+    public function getScripts(): array
     {
         return $this->_scripts;
     }

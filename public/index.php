@@ -44,6 +44,14 @@ $router->get('/', ACL::EVERYONE);
  * @GET METHOD
  */
 $router->get('/login', [ACL::NOT_LOGIN_IN]);
+$router->post('/login', [ACL::NOT_LOGIN_IN]);
+
+/**
+ * Logout route
+ * @GET METHOD
+ */
+$router->get('/register', [ACL::NOT_LOGIN_IN]);
+$router->post('/register', [ACL::NOT_LOGIN_IN]);
 
 /**
  * Logout route

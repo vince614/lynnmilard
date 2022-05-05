@@ -37,6 +37,11 @@ class UserEntity extends Entity
     /**
      * @var string
      */
+    private $auth;
+
+    /**
+     * @var string
+     */
     private $password;
 
     /**
@@ -259,6 +264,24 @@ class UserEntity extends Entity
     public function setAvatar(string $avatar): UserEntity
     {
         $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuth(): string
+    {
+        return $this->auth;
+    }
+
+    /**
+     * @param string $auth
+     * @return UserEntity
+     */
+    public function setAuth(string $auth): UserEntity
+    {
+        $this->auth = $auth;
         return $this;
     }
 }
