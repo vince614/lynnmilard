@@ -19,7 +19,8 @@ class ACL
      */
     const EVERYONE      = 0;
     const LOGGED_IN     = 1;
-    const ADMIN         = 2;
+    const NOT_LOGIN_IN  = 2;
+    const ADMIN         = 3;
 
     /**
      * @var array
@@ -90,6 +91,8 @@ class ACL
                     self::ADMIN :
                     self::LOGGED_IN;
             }
+        } else {
+            return self::NOT_LOGIN_IN;
         }
         return self::EVERYONE;
     }

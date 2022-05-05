@@ -17,7 +17,22 @@ class UserEntity extends Entity
     /**
      * @var string
      */
+    private $first_name;
+
+    /**
+     * @var string
+     */
+    private $last_name;
+
+    /**
+     * @var string
+     */
     private $username;
+
+    /**
+     * @var string
+     */
+    private $email;
 
     /**
      * @var string
@@ -25,9 +40,19 @@ class UserEntity extends Entity
     private $password;
 
     /**
+     * @var int
+     */
+    private $age;
+
+    /**
      * @var string
      */
-    private $email;
+    private $gender;
+
+    /**
+     * @var string
+     */
+    private $avatar;
 
     /**
      * @var int
@@ -83,7 +108,7 @@ class UserEntity extends Entity
      * @param $id
      * @return $this
      */
-    public function setId($id)
+    public function setId($id): UserEntity
     {
         $this->id = $id;
         return $this;
@@ -93,7 +118,7 @@ class UserEntity extends Entity
      * @param $created_at
      * @return $this
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($created_at): UserEntity
     {
         $this->created_at = $created_at;
         return $this;
@@ -103,7 +128,7 @@ class UserEntity extends Entity
      * @param $name
      * @return $this
      */
-    public function setUsername($name)
+    public function setUsername($name): UserEntity
     {
         $this->username = $name;
         return $this;
@@ -113,7 +138,7 @@ class UserEntity extends Entity
      * @param $email
      * @return $this
      */
-    public function setEmail($email)
+    public function setEmail($email): UserEntity
     {
         $this->email = $email;
         return $this;
@@ -123,7 +148,7 @@ class UserEntity extends Entity
      * @param int $is_admin
      * @return UserEntity
      */
-    public function setIsAdmin($is_admin)
+    public function setIsAdmin(int $is_admin): UserEntity
     {
         $this->is_admin = $is_admin;
         return $this;
@@ -133,7 +158,7 @@ class UserEntity extends Entity
      * @param $password
      * @return $this
      */
-    public function setPassword($password)
+    public function setPassword($password): UserEntity
     {
         $this->password = $password;
         return $this;
@@ -142,8 +167,98 @@ class UserEntity extends Entity
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * @param $firstName
+     * @return $this
+     */
+    public function setFirstName($firstName): UserEntity
+    {
+        $this->first_name = $firstName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * @param string $last_name
+     * @return UserEntity
+     */
+    public function setLastName(string $last_name): UserEntity
+    {
+        $this->last_name = $last_name;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAge(): int
+    {
+        return $this->age;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender(): string
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param int $age
+     * @return UserEntity
+     */
+    public function setAge(int $age): UserEntity
+    {
+        $this->age = $age;
+        return $this;
+    }
+
+    /**
+     * @param string $gender
+     * @return UserEntity
+     */
+    public function setGender(string $gender): UserEntity
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     * @return UserEntity
+     */
+    public function setAvatar(string $avatar): UserEntity
+    {
+        $this->avatar = $avatar;
+        return $this;
     }
 }

@@ -39,7 +39,7 @@ final class App
      *
      * @return App
      */
-    public static function init()
+    public static function init(): App
     {
         if (!self::$_instance) self::$_instance = new App();
         if (!self::$_config) self::$_config = new Config();
@@ -66,7 +66,7 @@ final class App
      * @param bool $graceful
      * @throws App_Core_Exception
      */
-    public static function register($key, $value, $graceful = false)
+    public static function register(string $key, $value, bool $graceful = false)
     {
         if (isset(self::$_registry[$key])) {
             if ($graceful) {
@@ -82,7 +82,7 @@ final class App
      *
      * @param string $key
      */
-    public static function unregister($key)
+    public static function unregister(string $key)
     {
         if (isset(self::$_registry[$key])) {
             if (is_object(self::$_registry[$key]) && (method_exists(self::$_registry[$key], '__destruct'))) {
@@ -98,7 +98,7 @@ final class App
      * @param string $key
      * @return mixed
      */
-    public static function registry($key)
+    public static function registry(string $key)
     {
         if (isset(self::$_registry[$key])) {
             return self::$_registry[$key];
@@ -126,7 +126,7 @@ final class App
      * @param string $modelClass
      * @return mixed
      */
-    public static function getModel($modelClass)
+    public static function getModel(string $modelClass)
     {
         $_modelClass = ucfirst($modelClass) . "Model";
         $className = "App\\Models\\" . $_modelClass;
@@ -142,7 +142,7 @@ final class App
      * @param string $message
      * @throws App_Core_Exception
      */
-    public static function throwException($message)
+    public static function throwException(string $message)
     {
         throw new App_Core_Exception($message);
     }
@@ -152,7 +152,7 @@ final class App
      *
      * @return Config
      */
-    public static function getConfigInstance()
+    public static function getConfigInstance(): Config
     {
         return self::$_config;
     }
@@ -183,7 +183,7 @@ final class App
      * @param $url
      * @param bool $isExternal
      */
-    public static function redirect($url, $isExternal = false)
+    public static function redirect($url, bool $isExternal = false)
     {
         $location = $isExternal ? $url : App::getHost() . $url;
         header('Location: ' . $location);

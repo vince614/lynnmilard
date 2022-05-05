@@ -43,6 +43,12 @@ $router->get('/', ACL::EVERYONE);
  * Logout route
  * @GET METHOD
  */
+$router->get('/login', [ACL::NOT_LOGIN_IN]);
+
+/**
+ * Logout route
+ * @GET METHOD
+ */
 $router->get('/logout', [ACL::LOGGED_IN]);
 
 /**
