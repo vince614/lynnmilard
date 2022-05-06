@@ -20,11 +20,6 @@ class RegisterController extends Controller
     const REGISTER_REQUEST_TYPE = "register";
 
     /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
      * @var UserModel
      */
     protected $userModel;
@@ -36,7 +31,6 @@ class RegisterController extends Controller
 
     public function __construct($path, $params = null)
     {
-        $this->request = new Request();
         $this->userModel = App::getModel('user');
         $this->formValidation = new FormValidation();
         parent::__construct($path, $params);

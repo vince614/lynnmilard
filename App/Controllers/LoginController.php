@@ -7,7 +7,6 @@ use App\Models\UserModel;
 use App_Core_Exception;
 use Core\Controllers\Controller;
 use Core\Utils\Ajax;
-use Core\Utils\Request;
 use Core\Form\FormValidation;
 
 /**
@@ -18,11 +17,6 @@ class LoginController extends Controller
 {
 
     const LOGIN_REQUEST_TYPE = "login";
-
-    /**
-     * @var Request
-     */
-    protected $request;
 
     /**
      * @var FormValidation
@@ -40,10 +34,10 @@ class LoginController extends Controller
      */
     public function __construct($path, $params = null)
     {
-        $this->request = new Request();
         $this->formValidation = new FormValidation();
         $this->userModel = App::getModel('user');
         parent::__construct($path, $params);
+        $this->trad->setTranlateFile('login');
     }
 
     /**
@@ -95,12 +89,17 @@ class LoginController extends Controller
                 /** @var UserEntity $loginUser */
                 $loginUser = $this->userModel->getEntity($this->userModel->_entityName, [
                     'email'         => $datas['email'],
-                    'password'      => sha1($datas['password'])
+                    'password'      => sha1($datas['password']),
+                    'username'      => $datas['email']
                 ]);
 
-                // Check if email exist email
+                // Search user with username & email
                 /** @var UserEntity $user */
-                if ($user = $this->userModel->load($loginUser->getEmail(), 'email')) {
+                $user =
+                    $this->userModel->load($loginUser->getEmail(), 'email') ||
+                    $this->userModel->load($loginUser->getUsername(), 'username');
+
+                if ($user) {
                     if ($user->getPassword() === $loginUser->getPassword()) {
                         $this->userModel->login($user);
                         $ajaxObject->success("Connecté !");
@@ -108,7 +107,7 @@ class LoginController extends Controller
                         $ajaxObject->error("Mot de passe incorect");
                     }
                 } else {
-                    $ajaxObject->error("Cet adresse mail n'existe pas");
+                    $ajaxObject->error("Nom d'utilisateur ou Email incorect");
                 }
         }
         $ajaxObject->sendResponse();

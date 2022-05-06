@@ -4,6 +4,7 @@ namespace App;
 use App_Core_Exception;
 use Core\Configuration\Config;
 use Core\Models\Database;
+use Core\Utils\Translate;
 use Dotenv\Dotenv;
 
 /**
@@ -21,6 +22,11 @@ final class App
      * @var App
      */
     static private $_instance;
+
+    /**
+     * @var Translate
+     */
+    static private $_traduction;
 
     /**
      * @var Config
@@ -43,6 +49,7 @@ final class App
     {
         if (!self::$_instance) self::$_instance = new App();
         if (!self::$_config) self::$_config = new Config();
+        if (!self::$_traduction) self::$_traduction = new Translate();
         return self::$_instance;
     }
 
@@ -55,6 +62,7 @@ final class App
         self::$_config      = null;
         self::$_instance    = null;
         self::$_dbinstance  = null;
+        self::$_traduction  = null;
         self::$_registry    = [];
     }
 
@@ -187,6 +195,20 @@ final class App
     {
         $location = $isExternal ? $url : App::getHost() . $url;
         header('Location: ' . $location);
+    }
+
+
+    /**
+     * Traduction
+     *
+     * @param $html
+     * @param $var
+     * @return string
+     */
+    public static function __($html, $var = null): string
+    {
+        if (!self::$_traduction) self::init();
+        return self::$_traduction->__($html, $var);
     }
 
 }

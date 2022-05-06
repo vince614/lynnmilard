@@ -80,7 +80,7 @@ class ACL
      *
      * @return int
      */
-    protected function getUserLvl()
+    protected function getUserLvl(): int
     {
         if ($user = $this->request->getSession('user')) {
             /** @var UserModel $userModel */

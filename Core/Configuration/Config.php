@@ -67,12 +67,13 @@ class Config extends Database
      *
      * @param $code
      * @param $value
+     * @param string $path
      * @return bool
      */
-    public function addConfig($code, $value)
+    public function addConfig($code, $value, string $path = '/'): bool
     {
-        $req = $this->pdo->prepare('INSERT INTO config (code, value) VALUES (?, ?)');
-        $req->execute([$code, $value]);
+        $req = $this->pdo->prepare('INSERT INTO config (code, value, path) VALUES (?, ?, ?)');
+        $req->execute([$code, $value, $path]);
         return $this->isSuccess($req);
     }
 
@@ -83,7 +84,7 @@ class Config extends Database
      * @param $value
      * @return bool
      */
-    public function updateConfig($code, $value)
+    public function updateConfig($code, $value): bool
     {
         $req = $this->pdo->prepare('UPDATE config SET value = ? WHERE code = ?');
         $req->execute([$value, $code]);
@@ -96,7 +97,7 @@ class Config extends Database
      * @param $code
      * @return bool
      */
-    public function deleteConfig($code)
+    public function deleteConfig($code): bool
     {
         $req = $this->pdo->prepare('DELETE FROM config WHERE code = ?');
         $req->execute([$code]);

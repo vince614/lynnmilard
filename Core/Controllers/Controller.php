@@ -1,8 +1,12 @@
 <?php
 namespace Core\Controllers;
 
+use App\App;
+use App\Models\UserModel;
 use Core\Utils\Meta;
 use Core\Utils\Render;
+use Core\Utils\Request;
+use Core\Utils\Translate;
 
 /**
  * Class Controller
@@ -77,6 +81,16 @@ class Controller
     public $meta;
 
     /**
+     * @var Translate
+     */
+    public $trad;
+
+    /**
+     * @var Request
+     */
+    public $request;
+
+    /**
      * Controller constructor.
      * @param $path
      * @param null $params
@@ -86,6 +100,9 @@ class Controller
         $this->path = $path;
         $this->params = $params;
         $this->meta = new Meta();
+        $this->trad = new Translate();
+        $this->request = new Request();
+        $this->trad->setLocale($this->getLocale());
         $this->index();
     }
 
@@ -217,6 +234,24 @@ class Controller
     public function getScripts(): array
     {
         return $this->_scripts;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        // Ignore if already get locale
+        if ($this->trad->getLocale()) return $this->trad->getLocale();
+        $locale = "fr";
+        if (isset($_COOKIE['locale'])) {
+            $locale = $_COOKIE['locale'];
+        } else if (isset($_SESSION['locale'])) {
+            $locale = $_SESSION['locale'];
+        }
+        return $locale;
     }
 
 }

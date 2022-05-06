@@ -3,6 +3,7 @@ namespace Core\Models;
 
 use App\App;
 use App_Core_Exception;
+use Core\Entity\Entity;
 use PDO;
 
 /**
@@ -56,7 +57,7 @@ class Model
      *
      * @param $id
      * @param $field
-     * @return bool|mixed
+     * @return Entity|false
      */
     public function load($id, $field = null)
     {
@@ -65,16 +66,15 @@ class Model
         $req = $this->_database->pdo->prepare($sql);
         $req->execute([$id]);
         return $this->_database->isSuccess($req) ?
-            $this->getEntity($this->_entityName, $req->fetch()) :
-            false;
+            $this->getEntity($this->_entityName, $req->fetch()) : false;
     }
 
     /**
      * Get collection
      *
-     * @return array
+     * @return Entity[]
      */
-    public function getCollection()
+    public function getCollection(): array
     {
         $result = [];
         $where = $this->_getWhereClause();
@@ -100,7 +100,7 @@ class Model
      * @param $value
      * @return $this
      */
-    public function addAttributToFilter($attribut, $value)
+    public function addAttributToFilter($attribut, $value): Model
     {
         $this->_filter[$attribut] = $value;
         return $this;
@@ -112,7 +112,7 @@ class Model
      * @param $limit
      * @return $this
      */
-    public function setLimit($limit)
+    public function setLimit($limit): Model
     {
         $this->limit = $limit;
         return $this;
@@ -122,10 +122,10 @@ class Model
      * Set order by
      *
      * @param $column
-     * @param $sort
+     * @param string $sort
      * @return $this
      */
-    public function setOrderBy($column, $sort)
+    public function setOrderBy($column, string $sort = "ASC"): Model
     {
         $this->orderBy = [
             'column'    => $column,
@@ -139,7 +139,7 @@ class Model
      *
      * @return string
      */
-    private function _getWhereClause()
+    private function _getWhereClause(): string
     {
         $sql = "";
         $i = 0;
@@ -161,7 +161,7 @@ class Model
      * @param $tableName
      * @return bool
      */
-    public function save($object, $tableName)
+    public function save($object, $tableName): bool
     {
         return $this->_database->updateMultiple($tableName, $this->getAllAttributesFromEntity($object));
     }
@@ -174,7 +174,7 @@ class Model
      * @param $tableName
      * @return bool
      */
-    public function create($object, $tableName)
+    public function create($object, $tableName): bool
     {
         return $this->_database->create($tableName, $this->getAllAttributesFromEntity($object));
     }
@@ -185,7 +185,7 @@ class Model
      * @param $object
      * @return array
      */
-    public function getAllAttributesFromEntity($object)
+    public function getAllAttributesFromEntity($object): array
     {
         $attributes = $object->getAttributes();
         $array = [];
@@ -208,7 +208,7 @@ class Model
      * @return bool
      * @throws App_Core_Exception
      */
-    public function delete($object, $tableName)
+    public function delete($object, $tableName): bool
     {
         if (is_callable([$object, 'getId'])) {
             $objectId = $object->getId();
@@ -224,7 +224,7 @@ class Model
      *
      * @param $entityName
      * @param $datas
-     * @return bool
+     * @return false|Entity
      */
     public function getEntity($entityName, $datas)
     {

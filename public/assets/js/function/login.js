@@ -6,7 +6,7 @@ class loginForm extends Form {
      */
     constructor() {
         super();
-        this.emailInput = $('#email');
+        this.emailInput = $('#email-username');
         this.passwordInput = $('#password');
         this.formTokenInput = $('#form-token');
     }
@@ -52,9 +52,8 @@ class loginForm extends Form {
      * Submit form
      */
     submit() {
-        this.valideForm() ?
-            this.send() :
-            alert(this.error); // @todo changer les alertes
+        this.getValues();
+        this.send();
     }
 
 }
